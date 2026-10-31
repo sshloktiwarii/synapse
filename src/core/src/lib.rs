@@ -4,6 +4,7 @@
 pub mod aabb;
 pub mod math;
 pub mod shapes;
+pub mod spatial;
 pub mod transform;
 
 #[cfg(test)]
