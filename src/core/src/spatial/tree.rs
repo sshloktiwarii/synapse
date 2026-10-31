@@ -2,6 +2,7 @@
 
 extern crate alloc;
 use alloc::boxed::Box;
+use alloc::vec::Vec;
 
 use crate::aabb::AABB;
 use crate::spatial::node::{RTreeEntry, RTreeNode};
@@ -179,6 +180,41 @@ impl RTree {
         self.root = RTreeNode::new_leaf();
         self.count = 0;
     }
+
+    /// Queries all element IDs whose bounding boxes intersect the given viewport.
+    /// Traverses the tree in O(log N) time by pruning non-overlapping branches.
+    pub fn query_viewport(&self, viewport: &AABB, results: &mut Vec<u32>) {
+        if !self.root.mbr.intersects(viewport) {
+            return;
+        }
+        Self::query_recursive(&self.root, viewport, results);
+    }
+
+    pub fn query(&self, viewport: &AABB) -> Vec<u32> {
+        let mut results = Vec::new();
+        self.query_viewport(viewport, &mut results);
+        results
+    }
+
+    fn query_recursive(node: &RTreeNode, viewport: &AABB, results: &mut Vec<u32>) {
+        if node.is_leaf {
+            for entry in &node.entries {
+                if let RTreeEntry::Leaf { mbr, element_id } = entry {
+                    if mbr.intersects(viewport) {
+                        results.push(*element_id);
+                    }
+                }
+            }
+        } else {
+            for entry in &node.entries {
+                if let RTreeEntry::Branch { mbr, child } = entry {
+                    if mbr.intersects(viewport) {
+                        Self::query_recursive(child, viewport, results);
+                    }
+                }
+            }
+        }
+    }
 }
 
 impl Default for RTree {
@@ -222,5 +258,47 @@ mod tests {
         assert_eq!(tree.len(), 19);
         assert!(!tree.remove(5)); // Second remove returns false
         assert!(!tree.remove(999));
+    }
+
+    #[test]
+    fn test_rtree_query_viewport() {
+        let mut tree = RTree::new();
+        // Insert a 10x10 grid of items
+        for x in 0..10 {
+            for y in 0..10 {
+                let id = x * 10 + y;
+                let min_x = x as f32 * 20.0;
+                let min_y = y as f32 * 20.0;
+                tree.insert(id, AABB::new(min_x, min_y, min_x + 10.0, min_y + 10.0));
+            }
+        }
+
+        assert_eq!(tree.len(), 100);
+
+        // Query viewport [15, 15, 45, 45] -> should hit cells (x in 1..2, y in 1..2)
+        let viewport = AABB::new(15.0, 15.0, 45.0, 45.0);
+        let results = tree.query(&viewport);
+
+        for id in &results {
+            let x = id / 10;
+            let y = id % 10;
+            let item_box = AABB::new(
+                x as f32 * 20.0,
+                y as f32 * 20.0,
+                x as f32 * 20.0 + 10.0,
+                y as f32 * 20.0 + 10.0,
+            );
+            assert!(
+                item_box.intersects(&viewport),
+                "Item {} should intersect viewport",
+                id
+            );
+        }
+
+        // Must find at least items (1,1), (1,2), (2,1), (2,2)
+        assert!(results.contains(&11));
+        assert!(results.contains(&12));
+        assert!(results.contains(&21));
+        assert!(results.contains(&22));
     }
 }
