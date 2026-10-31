@@ -2,6 +2,8 @@
 
 pub mod node;
 pub mod split;
+pub mod tree;
 
 pub use node::{RTreeEntry, RTreeNode, MAX_ENTRIES, MIN_ENTRIES};
 pub use split::quadratic_split;
+pub use tree::RTree;
