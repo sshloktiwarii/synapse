@@ -8,6 +8,14 @@ import type { WorkerRequest, WorkerResponse } from './sqlite_worker.ts';
 import { handleRpc } from './sqlite_worker.ts';
 import { telemetry } from '../telemetry.ts';
 
+export interface HydratedDocumentState {
+  docId: string;
+  vectorClock: Record<string, number>;
+  shapes: Record<string, unknown>;
+  rgaNodes: unknown[];
+  deltasReplayed: number;
+}
+
 export class OpfsStorageBridge {
   private worker: Worker | null = null;
   private pendingRequests: Map<string, { resolve: (val: unknown) => void; reject: (err: Error) => void }> = new Map();
@@ -90,8 +98,8 @@ export class OpfsStorageBridge {
     await this.callRpc('SAVE_SNAPSHOT', { docId, snapshot });
   }
 
-  public async loadLatest(docId: string): Promise<CRDTDelta | null> {
-    const data = await this.callRpc<CRDTDelta | null>('LOAD_LATEST', { docId });
+  public async loadLatest(docId: string): Promise<HydratedDocumentState | null> {
+    const data = await this.callRpc<HydratedDocumentState | null>('LOAD_LATEST', { docId });
     return data;
   }
 
