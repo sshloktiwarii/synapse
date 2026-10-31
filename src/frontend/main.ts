@@ -216,8 +216,6 @@ export class SynapseCanvasApp {
   private setupPointerListeners(canvas: HTMLCanvasElement): void {
     canvas.addEventListener('pointerdown', (e) => {
       this.isPointerDown = true;
-      this.dragStartX = e.clientX;
-      this.dragStartY = e.clientY;
       this.lastMouseScreenX = e.clientX;
       this.lastMouseScreenY = e.clientY;
 
