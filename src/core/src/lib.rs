@@ -3,6 +3,7 @@
 
 pub mod aabb;
 pub mod math;
+pub mod shapes;
 pub mod transform;
 
 #[cfg(test)]
