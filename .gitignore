@@ -6,3 +6,4 @@ src/core/target/
 *.db
 *.db-wal
 *.db-shm
+graphify-out/
