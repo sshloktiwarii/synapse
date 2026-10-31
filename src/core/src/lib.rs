@@ -2,7 +2,9 @@
 //! Compiles directly to `wasm32-unknown-unknown` for zero-copy linear memory mapping.
 
 pub mod aabb;
+pub mod arena;
 pub mod math;
+pub mod render_header;
 pub mod shapes;
 pub mod spatial;
 pub mod transform;
