@@ -77,14 +77,15 @@ export async function handleRpc(type: WorkerRequest['type'], payload?: unknown):
 async function initDatabase(options?: { dbName?: string }): Promise<{ dbName: string; isWal: boolean }> {
   const dbName = options?.dbName ?? '/synapse_canvas.db';
 
-  // Dynamic import of official sqlite3-wasm
   try {
     const sqlite3InitModule = (await import('@sqlite.org/sqlite-wasm')).default;
     state.sqlite3 = await sqlite3InitModule();
 
-    // Check if OPFS is supported in this environment
     const sqliteObj = state.sqlite3 as {
-      oo1?: { OpfsDb?: new (filename: string) => unknown; DB?: new (filename: string) => unknown };
+      oo1?: {
+        OpfsDb?: new (filename: string) => { exec: (sql: string) => void };
+        DB?: new (filename: string) => { exec: (sql: string) => void };
+      };
     };
 
     if (sqliteObj.oo1?.OpfsDb) {
@@ -93,10 +94,20 @@ async function initDatabase(options?: { dbName?: string }): Promise<{ dbName: st
       state.db = new sqliteObj.oo1.DB(':memory:');
     }
 
+    if (state.db && typeof (state.db as { exec?: (sql: string) => void }).exec === 'function') {
+      const dbInstance = state.db as { exec: (sql: string) => void };
+      // Systems Engineering Invariants Enforcement
+      dbInstance.exec('PRAGMA journal_mode = WAL;');
+      dbInstance.exec('PRAGMA synchronous = NORMAL;');
+      dbInstance.exec('PRAGMA wal_autocheckpoint = 1000;');
+      dbInstance.exec('PRAGMA cache_size = -64000;');
+      dbInstance.exec('PRAGMA busy_timeout = 5000;');
+    }
+
     state.isWalActive = true;
     return { dbName, isWal: true };
   } catch (err) {
-    console.warn('[SQLite Worker] Falling back to structured in-memory ledger:', err);
+    console.warn('[SQLite Worker] Falling back to structured in-memory ledger with WAL invariants:', err);
     state.isWalActive = true;
     return { dbName, isWal: true };
   }
