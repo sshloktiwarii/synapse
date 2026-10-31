@@ -3,11 +3,14 @@
 
 pub mod aabb;
 pub mod arena;
+pub mod ffi;
 pub mod math;
 pub mod render_header;
 pub mod shapes;
 pub mod spatial;
 pub mod transform;
+
+pub use ffi::*;
 
 #[cfg(test)]
 mod tests {
