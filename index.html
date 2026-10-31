@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SYNAPSE // LOCAL-FIRST COLLABORATIVE VECTOR CANVAS</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      html, body {
+        width: 100%;
+        height: 100dvh;
+        overflow: hidden;
+        background-color: #0a0b0e;
+        color: #ededed;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        -webkit-font-smoothing: antialiased;
+      }
+      #app {
+        width: 100vw;
+        height: 100dvh;
+        position: relative;
+        overflow: hidden;
+      }
+      canvas#canvas-stage {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="canvas-stage"></canvas>
+    </div>
+    <script type="module" src="/src/frontend/main.ts"></script>
+  </body>
+</html>
