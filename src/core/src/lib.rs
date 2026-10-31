@@ -2,6 +2,7 @@
 //! Compiles directly to `wasm32-unknown-unknown` for zero-copy linear memory mapping.
 
 pub mod math;
+pub mod transform;
 
 #[cfg(test)]
 mod tests {
