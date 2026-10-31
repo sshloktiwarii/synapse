@@ -1,0 +1,23 @@
+{
+  "name": "@systems-suite/synapse",
+  "version": "0.1.0",
+  "description": "Synapse: Local-First Collaborative Infinite Vector Canvas",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build:wasm": "cargo build --target wasm32-unknown-unknown --release"
+  },
+  "dependencies": {
+    "@sqlite.org/sqlite-wasm": "3.54.1-build1"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2",
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
+  }
+}
