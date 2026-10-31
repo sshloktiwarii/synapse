@@ -1,0 +1,302 @@
+{
+  "package.json": {
+    "mtime": 1793435910.9061716,
+    "seen": 1793437198.648824,
+    "ast_hash": "72484211ebdbc6a1f6b449b727909f57",
+    "semantic_hash": ""
+  },
+  "src/core/Cargo.toml": {
+    "mtime": 1793435968.4947462,
+    "seen": 1793437198.6488268,
+    "ast_hash": "9053e941ce2509ed9fa5af553cdae6ed",
+    "semantic_hash": ""
+  },
+  "src/core/src/aabb.rs": {
+    "mtime": 1793436159.360904,
+    "seen": 1793437198.6488278,
+    "ast_hash": "6ea6c032fb8fb1fe0f577df7a650d9c3",
+    "semantic_hash": ""
+  },
+  "src/core/src/arena.rs": {
+    "mtime": 1793436580.8498838,
+    "seen": 1793437198.648829,
+    "ast_hash": "22c6e1d664d8c724c0ea3fa18bfc3bad",
+    "semantic_hash": ""
+  },
+  "src/core/src/ffi.rs": {
+    "mtime": 1793436637.29297,
+    "seen": 1793437198.648829,
+    "ast_hash": "2a353b0f449c948099d025c4dd03f965",
+    "semantic_hash": ""
+  },
+  "src/core/src/lib.rs": {
+    "mtime": 1793436616.4727366,
+    "seen": 1793437198.648829,
+    "ast_hash": "0253f1dcc6cd078cf3cd1814c6075f21",
+    "semantic_hash": ""
+  },
+  "src/core/src/math.rs": {
+    "mtime": 1793436071.4663684,
+    "seen": 1793437198.64883,
+    "ast_hash": "dff572f8f34853e6eb63c92dd2be4455",
+    "semantic_hash": ""
+  },
+  "src/core/src/render_header.rs": {
+    "mtime": 1793436565.1134777,
+    "seen": 1793437198.64883,
+    "ast_hash": "dad4f42d3c30a70074dd60d70afce6d0",
+    "semantic_hash": ""
+  },
+  "src/core/src/shapes/bezier.rs": {
+    "mtime": 1793436265.999496,
+    "seen": 1793437198.64883,
+    "ast_hash": "a5cd672a3fd194a08587765083abecd3",
+    "semantic_hash": ""
+  },
+  "src/core/src/shapes/ellipse.rs": {
+    "mtime": 1793436224.0374339,
+    "seen": 1793437198.648831,
+    "ast_hash": "7940ba06c1f330916d0e581389bb4774",
+    "semantic_hash": ""
+  },
+  "src/core/src/shapes/mod.rs": {
+    "mtime": 1793436312.4961922,
+    "seen": 1793437198.648831,
+    "ast_hash": "ad8afa47e171b8406f290ebe5c50e6e1",
+    "semantic_hash": ""
+  },
+  "src/core/src/shapes/path.rs": {
+    "mtime": 1793436299.5041633,
+    "seen": 1793437198.648831,
+    "ast_hash": "d05065789aa4de55eaa355b8ffd48a0c",
+    "semantic_hash": ""
+  },
+  "src/core/src/shapes/rectangle.rs": {
+    "mtime": 1793436194.063723,
+    "seen": 1793437198.648832,
+    "ast_hash": "5ece23c66b3987509f7d21da7152c508",
+    "semantic_hash": ""
+  },
+  "src/core/src/spatial/hittest.rs": {
+    "mtime": 1793436511.4222217,
+    "seen": 1793437198.648832,
+    "ast_hash": "571c1987a3cd82eed87d80358f31e131",
+    "semantic_hash": ""
+  },
+  "src/core/src/spatial/mod.rs": {
+    "mtime": 1793436516.1525168,
+    "seen": 1793437198.648832,
+    "ast_hash": "65df7a4d8a7da5ff0fbdc10778516b37",
+    "semantic_hash": ""
+  },
+  "src/core/src/spatial/node.rs": {
+    "mtime": 1793436355.510706,
+    "seen": 1793437198.648832,
+    "ast_hash": "7489f2925f6a611e4591c31181a4b865",
+    "semantic_hash": ""
+  },
+  "src/core/src/spatial/split.rs": {
+    "mtime": 1793436415.831979,
+    "seen": 1793437198.648833,
+    "ast_hash": "ed0448e0ecdd9557266e24762ac2fc07",
+    "semantic_hash": ""
+  },
+  "src/core/src/spatial/tree.rs": {
+    "mtime": 1793436485.9328108,
+    "seen": 1793437198.648833,
+    "ast_hash": "35c8926bf8dbfdfc9a9af20d81e99a6d",
+    "semantic_hash": ""
+  },
+  "src/core/src/transform.rs": {
+    "mtime": 1793436131.3009202,
+    "seen": 1793437198.648833,
+    "ast_hash": "98c40ec64c4d1995dd881232233fb31f",
+    "semantic_hash": ""
+  },
+  "src/core/tests/spatial_benchmark.rs": {
+    "mtime": 1793436536.3385139,
+    "seen": 1793437198.648834,
+    "ast_hash": "3adafdfb01d88554e12341a504d5e947",
+    "semantic_hash": ""
+  },
+  "src/frontend/crdt/document.ts": {
+    "mtime": 1793436874.3827257,
+    "seen": 1793437198.648834,
+    "ast_hash": "37daab3f54c9b9d9cb6e9a46823e263d",
+    "semantic_hash": ""
+  },
+  "src/frontend/crdt/lww_register.ts": {
+    "mtime": 1793436771.3760786,
+    "seen": 1793437198.648834,
+    "ast_hash": "dee2afe83fc8d0f228bd0fc0d59001dd",
+    "semantic_hash": ""
+  },
+  "src/frontend/crdt/lww_set.ts": {
+    "mtime": 1793436805.1294262,
+    "seen": 1793437198.6488352,
+    "ast_hash": "df5f726eeb2c26847c3248ffbdac20c7",
+    "semantic_hash": ""
+  },
+  "src/frontend/crdt/rga_tree.ts": {
+    "mtime": 1793436838.917814,
+    "seen": 1793437198.6488352,
+    "ast_hash": "603f1482825d16e27b720ddd2f3eb060",
+    "semantic_hash": ""
+  },
+  "src/frontend/crdt/vector_clock.ts": {
+    "mtime": 1793436744.9618626,
+    "seen": 1793437198.6488361,
+    "ast_hash": "32a34b117433d074c4475f03bb8c1e3d",
+    "semantic_hash": ""
+  },
+  "src/frontend/main.ts": {
+    "mtime": 1793435989.445633,
+    "seen": 1793437198.6488361,
+    "ast_hash": "076d2d5e27b94be5c1b26ad30f00dfe6",
+    "semantic_hash": ""
+  },
+  "src/frontend/storage/opfs_bridge.ts": {
+    "mtime": 1793437183.3940272,
+    "seen": 1793437198.6488361,
+    "ast_hash": "2b37137913cf8f25ed2148ea1eb93d88",
+    "semantic_hash": ""
+  },
+  "src/frontend/storage/sqlite_worker.ts": {
+    "mtime": 1793437099.7740068,
+    "seen": 1793437198.648837,
+    "ast_hash": "382bf96c07818c03af78f2a4f7c9d8e2",
+    "semantic_hash": ""
+  },
+  "src/frontend/sync/broadcast_signaling.ts": {
+    "mtime": 1793436967.2384777,
+    "seen": 1793437198.648837,
+    "ast_hash": "494a7bbd9578581e6c3e6ec6ebe4c113",
+    "semantic_hash": ""
+  },
+  "src/frontend/sync/mesh_network.ts": {
+    "mtime": 1793436945.958998,
+    "seen": 1793437198.648837,
+    "ast_hash": "890e32b4acbf8d9ea32520d7b2a11bb5",
+    "semantic_hash": ""
+  },
+  "src/frontend/sync/presence.ts": {
+    "mtime": 1793437020.9729772,
+    "seen": 1793437198.6488378,
+    "ast_hash": "a0dc5cf4582ad1eb5c5635961f250ecf",
+    "semantic_hash": ""
+  },
+  "src/frontend/sync/webrtc_peer.ts": {
+    "mtime": 1793436925.1779325,
+    "seen": 1793437198.6488378,
+    "ast_hash": "f45cd08b22ed1e3f0f9c0102c695be1f",
+    "semantic_hash": ""
+  },
+  "src/frontend/telemetry.ts": {
+    "mtime": 1793436030.8748507,
+    "seen": 1793437198.6488378,
+    "ast_hash": "e58bb09740ef7530213c3fb95a979cde",
+    "semantic_hash": ""
+  },
+  "src/frontend/wasm/batch.ts": {
+    "mtime": 1793436704.2917922,
+    "seen": 1793437198.6488378,
+    "ast_hash": "c23e0f44c4f15d7607a97df1f11c43e7",
+    "semantic_hash": ""
+  },
+  "src/frontend/wasm/bridge.ts": {
+    "mtime": 1793436687.8425796,
+    "seen": 1793437198.648839,
+    "ast_hash": "7f52f198f57463caa467ebb8832cc007",
+    "semantic_hash": ""
+  },
+  "src/types/telemetry.ts": {
+    "mtime": 1793436023.4292116,
+    "seen": 1793437198.648839,
+    "ast_hash": "05205f3cb9938fcc8e243c35e692af3c",
+    "semantic_hash": ""
+  },
+  "test/crdt_algebra.test.ts": {
+    "mtime": 1793436900.481407,
+    "seen": 1793437198.648839,
+    "ast_hash": "573b6f82d1175f16a348cf4b307547e4",
+    "semantic_hash": ""
+  },
+  "test/lww_register.test.ts": {
+    "mtime": 1793436778.4546905,
+    "seen": 1793437198.64884,
+    "ast_hash": "8aef31307fa94ad54745a642ee6eab1a",
+    "semantic_hash": ""
+  },
+  "test/lww_set.test.ts": {
+    "mtime": 1793436814.2933729,
+    "seen": 1793437198.64884,
+    "ast_hash": "b327604e27714a38b3a3b55e2064bd31",
+    "semantic_hash": ""
+  },
+  "test/network_mesh.test.ts": {
+    "mtime": 1793437009.086126,
+    "seen": 1793437198.64884,
+    "ast_hash": "2687f0e533b897632d83b83ecf719d71",
+    "semantic_hash": ""
+  },
+  "test/rga_tree.test.ts": {
+    "mtime": 1793436848.3586853,
+    "seen": 1793437198.648841,
+    "ast_hash": "a0553f3b32ef09670c45740162669625",
+    "semantic_hash": ""
+  },
+  "test/smoke.test.ts": {
+    "mtime": 1793435985.4007187,
+    "seen": 1793437198.648841,
+    "ast_hash": "81ae6d8181acfade0f541a0aa254d9f2",
+    "semantic_hash": ""
+  },
+  "test/storage_persistence.test.ts": {
+    "mtime": 1793437160.6246245,
+    "seen": 1793437198.648841,
+    "ast_hash": "b77bd63ce70d1a555a0f1a4f4f791f4b",
+    "semantic_hash": ""
+  },
+  "test/telemetry.test.ts": {
+    "mtime": 1793436036.5275803,
+    "seen": 1793437198.648842,
+    "ast_hash": "f0193960a5ea492fae7c919ec31d8425",
+    "semantic_hash": ""
+  },
+  "test/vector_clock.test.ts": {
+    "mtime": 1793436751.6295078,
+    "seen": 1793437198.648842,
+    "ast_hash": "fb0d6b3c35dadeac8305a4d934ca11b6",
+    "semantic_hash": ""
+  },
+  "test/wasm_bridge.test.ts": {
+    "mtime": 1793436723.396325,
+    "seen": 1793437198.648842,
+    "ast_hash": "367ee131c122fa2bf893bfb96a981289",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1793435903.4946742,
+    "seen": 1793437198.648843,
+    "ast_hash": "7d535926e9d686cf6c3eaa5fe4fe964f",
+    "semantic_hash": ""
+  },
+  "vite.config.ts": {
+    "mtime": 1793436008.5794127,
+    "seen": 1793437198.648843,
+    "ast_hash": "570a171e04ab63bd05543a9a4e2e0618",
+    "semantic_hash": ""
+  },
+  "vitest.config.ts": {
+    "mtime": 1793436003.4781122,
+    "seen": 1793437198.648843,
+    "ast_hash": "8147469bd86af2074e537cfc27063c51",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1793435941.1945176,
+    "seen": 1793437198.648844,
+    "ast_hash": "8f1ea72da06c913e87d12894e0b8f537",
+    "semantic_hash": ""
+  }
+}
