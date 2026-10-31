@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { RGATree, RGANode } from '../src/frontend/crdt/rga_tree.ts';
-import { DocumentCRDT, type CRDTDelta } from '../src/frontend/crdt/document.ts';
 
 describe('RGA Subtree & Reordering Empirical Challenge', () => {
   it('challenges RGA commutativity when concurrent sibling has descendant', () => {

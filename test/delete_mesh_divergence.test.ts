@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { DocumentCRDT, type CRDTDelta } from '../src/frontend/crdt/document.ts';
+import { DocumentCRDT } from '../src/frontend/crdt/document.ts';
 
 describe('Concurrent Deletion in Multi-Peer Mesh', () => {
   it('demonstrates divergence when one peer deletes an existing shape and syncs to others', () => {
