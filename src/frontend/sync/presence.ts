@@ -95,7 +95,7 @@ export class PresenceManager {
 
       this.presences.set(remote.peerId, {
         ...remote,
-        lastUpdated: Date.now(),
+        lastUpdated: remote.lastUpdated || Date.now(),
       });
       this.notify();
     } catch (err) {
