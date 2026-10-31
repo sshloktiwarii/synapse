@@ -116,10 +116,25 @@ export class RGATree {
     }
 
     // Skip ahead past any concurrent siblings that have greater (timestamp, clientId)
-    while (insertIndex < this.nodes.len() && this.nodes[insertIndex]!.originId === node.originId) {
-      if (RGANode.compare(node, this.nodes[insertIndex]!) < 0) {
+    // as well as all transitive descendants of those skipped siblings.
+    const skipped = new Set<string>();
+    while (insertIndex < this.nodes.length) {
+      const current = this.nodes[insertIndex]!;
+      if (current.originId === node.originId) {
+        if (RGANode.compare(node, current) < 0) {
+          // Current sibling has higher priority; skip it and track its descendants
+          skipped.add(current.id);
+          insertIndex++;
+        } else {
+          // Current sibling has lower priority; insert before it
+          break;
+        }
+      } else if (current.originId !== null && skipped.has(current.originId)) {
+        // Transitive descendant of a skipped higher-priority sibling; skip it
+        skipped.add(current.id);
         insertIndex++;
       } else {
+        // Reached an unrelated boundary; stop scanning
         break;
       }
     }

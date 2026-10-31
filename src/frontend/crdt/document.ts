@@ -159,23 +159,31 @@ export class DocumentCRDT {
     // Merge vector clock
     this.vectorClock = this.vectorClock.merge(VectorClock.fromJSON(delta.vectorClock));
 
-    // Merge shapes
+    // Merge shapes and layers
     let shapesChanged = false;
+    let layersChanged = false;
     for (const shapeData of Object.values(delta.shapes)) {
       const incoming = CanvasShapeCRDT.fromJSON(shapeData);
       const existing = this.shapes.get(incoming.id);
+      let target: CanvasShapeCRDT;
       if (!existing) {
         this.shapes.set(incoming);
+        target = incoming;
         shapesChanged = true;
       } else {
         const merged = existing.merge(incoming);
         this.shapes.set(merged);
+        target = merged;
         shapesChanged = true;
+      }
+
+      if (!target.isAlive()) {
+        this.layers.deleteElement(target.id);
+        layersChanged = true;
       }
     }
 
     // Merge RGA layer nodes
-    let layersChanged = false;
     for (const nodeData of delta.rgaNodes) {
       if (this.layers.insertNode(RGANode.fromJSON(nodeData))) {
         layersChanged = true;
