@@ -71,6 +71,7 @@ export class RGATree {
   private nodes: RGANode[] = [];
   private nodeMap: Map<string, RGANode> = new Map();
   private elementMap: Map<string, RGANode> = new Map();
+  private pendingNodes: Map<string, RGANode[]> = new Map();
 
   /**
    * Inserts an element after the given predecessor element ID (or at the head if predecessor is null).
@@ -92,6 +93,8 @@ export class RGATree {
   /**
    * Inserts a node maintaining RGA ordering invariants.
    * If concurrent nodes share the same originId, higher (timestamp, clientId) is placed first.
+   * If a node arrives before its predecessor originId, it is buffered and recursively
+   * drained once the predecessor arrives.
    */
   public insertNode(node: RGANode): boolean {
     if (this.nodeMap.has(node.id)) {
@@ -104,14 +107,24 @@ export class RGATree {
       return false;
     }
 
+    // If predecessor has not arrived yet, buffer in pending queue
+    if (node.originId !== null && !this.nodeMap.has(node.originId)) {
+      let pending = this.pendingNodes.get(node.originId);
+      if (!pending) {
+        pending = [];
+        this.pendingNodes.set(node.originId, pending);
+      }
+      if (!pending.some((n) => n.id === node.id)) {
+        pending.push(node);
+      }
+      return true;
+    }
+
     let insertIndex = 0;
     if (node.originId !== null) {
       const originIdx = this.nodes.findIndex((n) => n.id === node.originId);
       if (originIdx !== -1) {
         insertIndex = originIdx + 1;
-      } else {
-        // Predecessor not found yet (out-of-order network arrival): insert at head
-        insertIndex = 0;
       }
     }
 
@@ -142,6 +155,17 @@ export class RGATree {
     this.nodes.splice(insertIndex, 0, node);
     this.nodeMap.set(node.id, node);
     this.elementMap.set(node.elementId, node);
+
+    // Drain any pending children waiting for this node
+    const pendingChildren = this.pendingNodes.get(node.id);
+    if (pendingChildren && pendingChildren.length > 0) {
+      this.pendingNodes.delete(node.id);
+      pendingChildren.sort((a, b) => RGANode.compare(b, a));
+      for (const child of pendingChildren) {
+        this.insertNode(child);
+      }
+    }
+
     return true;
   }
 

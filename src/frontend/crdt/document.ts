@@ -185,8 +185,22 @@ export class DocumentCRDT {
 
     // Merge RGA layer nodes
     for (const nodeData of delta.rgaNodes) {
-      if (this.layers.insertNode(RGANode.fromJSON(nodeData))) {
+      const node = RGANode.fromJSON(nodeData);
+      const shape = this.shapes.get(node.elementId);
+      if (shape && !shape.isAlive()) {
+        node.deleted = true;
+      }
+      if (this.layers.insertNode(node)) {
         layersChanged = true;
+      }
+    }
+
+    // Guarantee that tombstoned shapes are never resurrected in layer ordering
+    for (const shape of this.shapes.getAll()) {
+      if (!shape.isAlive()) {
+        if (this.layers.deleteElement(shape.id)) {
+          layersChanged = true;
+        }
       }
     }
 
