@@ -1,6 +1,7 @@
 //! Linear memory arena and contiguous render batch buffer.
 
 extern crate alloc;
+use alloc::collections::BTreeMap;
 use alloc::vec::Vec;
 
 use crate::aabb::AABB;
@@ -17,7 +18,7 @@ pub const DEFAULT_MAX_ELEMENTS: usize = 65536;
 
 pub struct RenderArena {
     pub headers: Vec<ElementRenderHeader>,
-    pub id_to_index: Vec<Option<u32>>,
+    pub id_to_index: BTreeMap<u32, u32>,
     pub visible_indices: Vec<u32>,
     pub rtree: RTree,
 }
@@ -26,22 +27,17 @@ impl RenderArena {
     pub fn new(capacity: usize) -> Self {
         Self {
             headers: Vec::with_capacity(capacity),
-            id_to_index: Vec::with_capacity(capacity),
+            id_to_index: BTreeMap::new(),
             visible_indices: Vec::with_capacity(capacity),
             rtree: RTree::new(),
         }
     }
 
     pub fn upsert_header(&mut self, header: ElementRenderHeader) -> u32 {
-        let id = header.id as usize;
-
-        if id >= self.id_to_index.len() {
-            self.id_to_index.resize(id + 1, None);
-        }
-
+        let id = header.id;
         let aabb = header.aabb();
 
-        if let Some(existing_idx) = self.id_to_index[id] {
+        if let Some(&existing_idx) = self.id_to_index.get(&id) {
             // Update existing header in place
             let idx = existing_idx as usize;
             self.headers[idx] = header;
@@ -54,19 +50,14 @@ impl RenderArena {
             // Append new header
             let new_idx = self.headers.len() as u32;
             self.headers.push(header);
-            self.id_to_index[id] = Some(new_idx);
+            self.id_to_index.insert(id, new_idx);
             self.rtree.insert(header.id, aabb);
             new_idx
         }
     }
 
     pub fn remove_element(&mut self, id: u32) -> bool {
-        let id_usize = id as usize;
-        if id_usize >= self.id_to_index.len() {
-            return false;
-        }
-
-        if let Some(idx_to_remove) = self.id_to_index[id_usize] {
+        if let Some(idx_to_remove) = self.id_to_index.remove(&id) {
             let idx = idx_to_remove as usize;
             let last_idx = self.headers.len() - 1;
 
@@ -74,11 +65,10 @@ impl RenderArena {
                 // Swap with last element to keep array contiguous
                 let moved_element = self.headers[last_idx];
                 self.headers[idx] = moved_element;
-                self.id_to_index[moved_element.id as usize] = Some(idx as u32);
+                self.id_to_index.insert(moved_element.id, idx as u32);
             }
 
             self.headers.pop();
-            self.id_to_index[id_usize] = None;
             self.rtree.remove(id);
             true
         } else {
@@ -96,8 +86,8 @@ impl RenderArena {
 
         // Map visible IDs to indices in the render buffer
         for id in visible_ids {
-            if let Some(Some(idx)) = self.id_to_index.get(id as usize) {
-                self.visible_indices.push(*idx);
+            if let Some(&idx) = self.id_to_index.get(&id) {
+                self.visible_indices.push(idx);
             }
         }
 
@@ -108,7 +98,7 @@ impl RenderArena {
         let pt = Point::new(x, y);
 
         let hit_id = hit_test_two_phase(&self.rtree, pt, tolerance, |id| {
-            let idx = self.id_to_index.get(id as usize)?.as_ref()?;
+            let idx = self.id_to_index.get(&id)?;
             let h = self.headers.get(*idx as usize)?;
             let t = Affine2D::from_array(h.transform);
 
@@ -194,5 +184,13 @@ mod tests {
         assert!(arena.remove_element(1));
         assert_eq!(arena.headers_count(), 1);
         assert_eq!(arena.headers[0].id, 2);
+
+        // Test sparse 2-billion UUID insertion without allocating 8GB linear array
+        let mut sparse_header = ElementRenderHeader::new(2_000_000_000, 0);
+        sparse_header.set_aabb(&AABB::new(0.0, 0.0, 10.0, 10.0));
+        let idx = arena.upsert_header(sparse_header);
+        assert_eq!(arena.headers_count(), 2);
+        assert_eq!(arena.id_to_index.len(), 2);
+        assert_eq!(arena.id_to_index.get(&2_000_000_000), Some(&idx));
     }
 }
